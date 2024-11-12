@@ -1,4 +1,4 @@
-import { getDataUserService } from "../../services/userService";
+import { createUserService, getDataUserService } from "../../services/userService";
 
 const resolvers = {
     Query: {
@@ -10,14 +10,27 @@ const resolvers = {
         if (email) {
             payload.email = email;
         }
-        return await getDataUserService(payload);
+        const users = await getDataUserService(payload);
+
+        return {
+            meta: {
+              code: 200,
+              message: 'success',
+            },
+            data: users
+          };
       }
     },
     Mutation: {
-      createJob: () => {
-        return {
-          success: 'Halo',
+      createJob: async (_root: any, { name, email, password }: { name: string, email: string, password: string }) => {
+        const userPayload = {
+          name,
+          email,
+          password,
         };
+
+        const user = await createUserService(userPayload);
+        return user
       },
     },
   };
