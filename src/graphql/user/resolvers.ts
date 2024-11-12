@@ -1,3 +1,4 @@
+import { checkLoggedIn } from "../../libs/helpers";
 import { createUserService, getDataUserService } from "../../services/userService";
 
 const resolvers = {
@@ -5,7 +6,8 @@ const resolvers = {
       hello: () => {
         return 'Hello';
       },
-      users: async (_root: any, { email }: { email: string }) => {
+      users: async (_root: any, { email }: { email: string }, context: { user: { sub: string, email: string, lat: number } }) => {
+        checkLoggedIn(context);
         const payload: { email?:string } = {};
         if (email) {
             payload.email = email;

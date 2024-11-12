@@ -1,25 +1,39 @@
 
 import User from "../models/User";
-import mongoose, { PipelineStage } from 'mongoose'; 
+import mongoose, { PipelineStage } from 'mongoose';
+import { Request } from "express-jwt";
+
+
+export interface IUser {
+    name: String;
+    email: String;
+    password: String;
+}
+
+export interface IUserResponse {
+    _id: mongoose.ObjectId
+    name: string
+    email: string
+    password: string
+}
 
 export const createUserRepo = async (userData: unknown) => {
     return await User.create(userData);
 };
 
-export const getRawUser = async (payload: PipelineStage[]) => {
+export const getRawUser = async (payload: PipelineStage[]): Promise<IUserResponse[]> => {
     try {
-        const pipeline: PipelineStage[] = [...payload];
-
-        if (pipeline.length === 0) {
+        if (payload.length === 0) {
             return await User.find();
         }
 
-        return await User.aggregate(pipeline);
+        return await User.aggregate(payload);
     } catch (error) {
         console.error('Error in getRawUser:', error);
-        throw new Error(`Failed to fetch data: ${error}`);
+        throw new Error(`Failed to fetch user data: ${error instanceof Error ? error.message : String(error)}`);
     }
-};
+}
+
 
 export const getUserById = async (userId: string) => {
     try {

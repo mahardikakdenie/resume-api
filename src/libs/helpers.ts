@@ -28,3 +28,11 @@ export const uploadImage = async (req: MulterRequest) => {
     throw new Error(`Failed to upload image: ${error}`);
   }
 };
+
+export const checkLoggedIn = (context: { user: any }) => {
+  if (!context.user) {
+    throw new Error("User is not logged in or the token is invalid");
+  }
+  return context.user;  // Optionally, you can return the user object if you need it in the resolver
+};
+
