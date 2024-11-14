@@ -2,15 +2,17 @@ import {gql} from "graphql-tag";
 
 const typeDefs = gql`
     type Query {
-        projects: [Project]
+        projects(name: String): [Project]
     }
 
     type Mutation {
         createProject(project: ProjectDTO): Project
+        updateProject(id: String, project: ProjectDTO): Project
+        deleteProject(id: String): Project
     }
 
     type Project {
-        id: ID!
+        id: ID
         name: String!
         description: String
         media: Media
@@ -18,7 +20,7 @@ const typeDefs = gql`
     }
 
     input ProjectDTO {
-        name: String!
+        name: String
         description: String
         media: MediaInput
         information: InformationInput

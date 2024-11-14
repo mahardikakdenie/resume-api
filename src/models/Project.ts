@@ -52,6 +52,10 @@ const projectSchema = new mongoose.Schema({
                 }
             }
         ],
+    },
+    is_deleted: {
+        type: Date,
+        require: false,
     }
 }, { timestamps: true });
 
