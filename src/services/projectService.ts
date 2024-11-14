@@ -16,7 +16,7 @@ export const getDataProject = async (payload?: { name?: string }) => {
         ];
 
         return await getProjectRaw(pipelines);     
-    } catch (error) {
+    } catch (error: unknown) {
         throw new Error(`Failed to fetch project data: ${error instanceof Error ? error.message : String(error)}`);
     }
 };
@@ -24,7 +24,7 @@ export const getDataProject = async (payload?: { name?: string }) => {
 export const createProject = async (data: I_ProjectDTO) => {
     try {
         return await create(data);
-    } catch (error) {
+    } catch (error: unknown) {
         throw new Error(`Failed to fetch project data: ${error instanceof Error ? error.message : String(error)}`);
     }
 };
@@ -33,7 +33,7 @@ export const updateProject = async (id: string, data: Partial<I_ProjectDTO>) => 
     try {
         const projectId = new mongoose.Types.ObjectId(id);
         return await updateProjectById<I_ProjectDTO>(projectId, data);
-    } catch (error) {
+    } catch (error: unknown) {
         throw new Error(`Failed to fetch project data: ${error instanceof Error ? error.message : String(error)}`);
     }
 };
