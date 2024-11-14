@@ -24,9 +24,8 @@ export const createUserRepo = async (userData: unknown) => {
 export const getRawUser = async (payload: PipelineStage[]): Promise<IUserResponse[]> => {
     try {
         if (payload.length === 0) {
-            return await User.find();
+            return await User.find({});
         }
-
         return await User.aggregate(payload);
     } catch (error) {
         console.error('Error in getRawUser:', error);

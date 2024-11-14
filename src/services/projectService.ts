@@ -1,5 +1,6 @@
 import { PipelineStage } from "mongoose";
-import { getProjectRaw } from "../repositories/projectRepository";
+import { create, getProjectRaw } from "../repositories/projectRepository";
+import { I_ProjectDTO } from "../libs/interface/project.interface";
 
 export const getDataProject = async (payload?: { name?: String }) => {
     try {
@@ -14,6 +15,14 @@ export const getDataProject = async (payload?: { name?: String }) => {
 
         return await getProjectRaw(pipelines);     
     } catch (error) {
-        throw new Error(`Failed to fetch user data: ${error instanceof Error ? error.message : String(error)}`);
+        throw new Error(`Failed to fetch project data: ${error instanceof Error ? error.message : String(error)}`);
+    }
+};
+
+export const createProject = async (data: I_ProjectDTO) => {
+    try {
+        return await create(data);
+    } catch (error) {
+        throw new Error(`Failed to fetch project data: ${error instanceof Error ? error.message : String(error)}`);
     }
 };
