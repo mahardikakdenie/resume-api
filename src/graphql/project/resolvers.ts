@@ -8,7 +8,6 @@ const resolvers = {
     Query: {
         projects: async (_root: any, { name }: { name?: string }, context: I_USER_AUTH) => {
             try {
-                checkLoggedIn(context);
                 return await getDataProject({ name });
             } catch (error: unknown) {
                 throw new Error(`Failed to fetch user data: ${error instanceof Error ? error.message : String(error)}`)
