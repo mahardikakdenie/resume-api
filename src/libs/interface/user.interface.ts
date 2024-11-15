@@ -1,0 +1,1 @@
+export interface I_USER_AUTH { user: { sub: string, email: string, lat: number } }

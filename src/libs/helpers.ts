@@ -1,6 +1,7 @@
 import { Request } from "express";
 import axios from 'axios';
 import FormData from 'form-data';
+import { I_USER_AUTH } from "./interface/user.interface";
 
 interface MulterRequest extends Request {
     file?: Express.Multer.File; // Pastikan ini ada
@@ -29,7 +30,7 @@ export const uploadImage = async (req: MulterRequest) => {
   }
 };
 
-export const checkLoggedIn = (context: { user: any }) => {
+export const checkLoggedIn = (context: I_USER_AUTH) => {
   if (!context.user) {
     throw new Error("User is not logged in or the token is invalid");
   }

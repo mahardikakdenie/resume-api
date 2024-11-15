@@ -1,4 +1,5 @@
 import { checkLoggedIn } from "../../libs/helpers";
+import { I_USER_AUTH } from "../../libs/interface/user.interface";
 import { createUserService, getDataUserService } from "../../services/userService";
 
 const resolvers = {
@@ -6,7 +7,7 @@ const resolvers = {
       hello: () => {
         return 'Hello';
       },
-      users: async (_root: any, { email }: { email: string }, context: { user: { sub: string, email: string, lat: number } }) => {
+      users: async (_root: any, { email }: { email: string }, context: I_USER_AUTH) => {
         checkLoggedIn(context);
         const payload: { email?:string } = {};
         if (email) {
@@ -24,7 +25,8 @@ const resolvers = {
       }
     },
     Mutation: {
-      createJob: async (_root: any, { name, email, password }: { name: string, email: string, password: string }) => {
+      createJob: async (_root: any, { name, email, password }: { name: string, email: string, password: string }, context: I_USER_AUTH) => {
+        checkLoggedIn(context);
         const userPayload = {
           name,
           email,
